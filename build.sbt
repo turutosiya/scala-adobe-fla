@@ -2,7 +2,7 @@ organization := "com.turutosiya"
 
 name := """scala-adobe-fla"""
 
-version := "0.1.3"
+version := "0.1.0"
 
 scalaVersion := "2.11.7"
 
