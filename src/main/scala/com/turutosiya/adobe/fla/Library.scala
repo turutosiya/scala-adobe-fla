@@ -35,6 +35,6 @@ object Library {
             SymbolItem(
               scala.xml.XML.load(
                 Files.newInputStream(
-                  fla.base.resolve(s"LIBRARY/${(include \@ "href")}.xml")))).asInstanceOf[Item]))
+                  fla.base.resolve(s"LIBRARY/${(include \@ "href")}")))).asInstanceOf[Item]))
           .flatten.toList)
 }
