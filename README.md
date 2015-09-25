@@ -8,7 +8,7 @@ Flash Scala API ( .fla parser for Scala )
 
     resolvers += "scala-adobe-fla" at "http://turutosiya.github.io/scala-adobe-fla/"
 
-    libraryDependencies += "com.turutosiya" % "scala-adobe-fla_2.11" % "0.2.1"
+    libraryDependencies += "com.turutosiya" % "scala-adobe-fla_2.11" % "0.2.2"
     
 ## code
 
