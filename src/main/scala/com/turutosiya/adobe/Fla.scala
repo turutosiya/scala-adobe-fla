@@ -4,12 +4,12 @@ import java.io.{BufferedInputStream, File, FileInputStream, FileOutputStream}
 import java.nio.file.{Files, Path}
 import java.util.zip.{ZipEntry, ZipInputStream}
 
-import com.turutosiya.adobe.fla.{SymbolInstance, LibraryItem}
+import com.turutosiya.adobe.fla.Document
 
 /**
  * Fla
  *
- * .fla's HEADER is invalid as ZIP then we can not use ZipfileSystem & ZipFile
+ * .fla's zip HEADER is invalid. then we can not use ZipfileSystem & ZipFile.
  */
 case class Fla(
   base: Path) {
@@ -19,41 +19,7 @@ case class Fla(
    *
    * @return
    */
-  def document: scala.xml.Node =
-    scala.xml.XML.load(
-      Files.newInputStream(
-        base.resolve("DOMDocument.xml")))
-
-  /**
-   * symbolInstances
-   *
-   * @return
-   */
-  def symbolInstances: List[com.turutosiya.adobe.fla.SymbolInstance] =
-    (document \\ "DOMSymbolInstance")
-      .map(SymbolInstance.apply(this, _))
-      .toList
-
-  /**
-   * libraryItems
-   *
-   * @return
-   */
-  def libraryItems: List[LibraryItem] =
-    symbolInstances.map(_.libraryItem)
-
-  /**
-   * libraryItem
-   *
-   * @param name
-   * @return
-   */
-  def libraryItem(name: String): LibraryItem =
-    LibraryItem.apply(
-      this,
-      scala.xml.XML.load(
-        Files.newInputStream(
-          base.resolve(s"LIBRARY/${name}.xml"))))
+  def document: Document = Document(this)
 
 }
 

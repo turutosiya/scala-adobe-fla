@@ -8,4 +8,4 @@
 
     resolvers += "scala-adobe-fla" at "http://turutosiya.github.io/scala-adobe-fla/"
 
-    libraryDependencies += "com.turutosiya" % "scala-adobe-fla_2.11" % "0.2.0"
+    libraryDependencies += "com.turutosiya" % "scala-adobe-fla_2.11" % "0.2.1"

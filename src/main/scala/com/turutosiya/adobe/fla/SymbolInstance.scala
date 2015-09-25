@@ -1,24 +1,17 @@
 package com.turutosiya.adobe.fla
 
-import com.turutosiya.adobe.Fla
 import scala.xml.Node
 
 /**
  * SymbolInstance class
  */
 case class SymbolInstance(
-  fla: Fla,
   libraryItemName: String, // name of the library item of this instance
   name: String,            // name of this instance
-  selected: String) {      // "true"
+  selected: String         // "true"
+) extends Element {
 
-  /**
-   * libraryItem
-   *
-   * @return
-   */
-  def libraryItem: LibraryItem =
-    fla.libraryItem(libraryItemName)
+
 }
 
 /**
@@ -29,15 +22,13 @@ object SymbolInstance {
   /**
    * apply
    *
-   * @param fla
-   * @param node
+   * @param symbolInstanceDomNode
    * @return
    */
-  def apply(fla: Fla, node: Node): SymbolInstance =
+  def apply(symbolInstanceDomNode: Node): SymbolInstance =
     SymbolInstance(
-      fla = fla,
-      libraryItemName = (node \ "@libraryItemName").text,
-      name = (node \ "@name").text,
-      selected = (node \ "@selected").text)
+      libraryItemName = (symbolInstanceDomNode \@ "libraryItemName"),
+      name = (symbolInstanceDomNode \@ "name"),
+      selected = (symbolInstanceDomNode \@ "selected"))
 
 }
