@@ -4,7 +4,7 @@ import java.io.{BufferedInputStream, File, FileInputStream, FileOutputStream}
 import java.nio.file.{Files, Path}
 import java.util.zip.{ZipEntry, ZipInputStream}
 
-import com.turutosiya.adobe.fla.LibraryItem
+import com.turutosiya.adobe.fla.{SymbolInstance, LibraryItem}
 
 /**
  * Fla
@@ -15,23 +15,23 @@ case class Fla(
   base: Path) {
 
   /**
-   * DOMDocument
+   * document
    *
    * @return
    */
-  def DOMDocument: scala.xml.Node =
+  def document: scala.xml.Node =
     scala.xml.XML.load(
       Files.newInputStream(
         base.resolve("DOMDocument.xml")))
 
   /**
-   * DOMSymbolInstances
+   * symbolInstances
    *
    * @return
    */
-  def symbols: List[com.turutosiya.adobe.fla.Symbol] =
-    (DOMDocument \\ "DOMSymbolInstance")
-      .map(com.turutosiya.adobe.fla.Symbol.apply(this, _))
+  def symbolInstances: List[com.turutosiya.adobe.fla.SymbolInstance] =
+    (document \\ "DOMSymbolInstance")
+      .map(SymbolInstance.apply(this, _))
       .toList
 
   /**
@@ -40,7 +40,7 @@ case class Fla(
    * @return
    */
   def libraryItems: List[LibraryItem] =
-    symbols.map(_.libraryItem)
+    symbolInstances.map(_.libraryItem)
 
   /**
    * libraryItem
@@ -63,14 +63,19 @@ case class Fla(
 object Fla {
 
   /**
+   * BufferSize
+   */
+  val BufferSize: Int = 2048
+
+  /**
    *
    * @return
    */
   def apply(fla: File): Fla = {
     // create temporary directory
-    val base = Files.createTempDirectory("pyramid")
+    val base = Files.createTempDirectory("scala-adobe-fla")
     // buffer
-    val buffer = new Array[Byte](2048)
+    val buffer = new Array[Byte](BufferSize)
     // get zip input stream
     val zip = new ZipInputStream(new BufferedInputStream(new FileInputStream(fla)))
     // loop each entry

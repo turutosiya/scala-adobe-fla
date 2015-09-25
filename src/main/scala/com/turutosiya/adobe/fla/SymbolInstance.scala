@@ -4,12 +4,12 @@ import com.turutosiya.adobe.Fla
 import scala.xml.Node
 
 /**
- * Symbol class
+ * SymbolInstance class
  */
-case class Symbol(
+case class SymbolInstance(
   fla: Fla,
-  libraryItemName: String, // "linkCP"
-  name: String,            // "lcp001"
+  libraryItemName: String, // name of the library item of this instance
+  name: String,            // name of this instance
   selected: String) {      // "true"
 
   /**
@@ -22,9 +22,9 @@ case class Symbol(
 }
 
 /**
- * Symbol companion object
+ * SymbolInstance companion object
  */
-object Symbol {
+object SymbolInstance {
 
   /**
    * apply
@@ -33,8 +33,8 @@ object Symbol {
    * @param node
    * @return
    */
-  def apply(fla: Fla, node: Node): Symbol =
-    Symbol(
+  def apply(fla: Fla, node: Node): SymbolInstance =
+    SymbolInstance(
       fla = fla,
       libraryItemName = (node \ "@libraryItemName").text,
       name = (node \ "@name").text,
